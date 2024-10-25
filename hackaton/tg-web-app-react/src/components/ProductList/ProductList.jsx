@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useCallback, useEffect} from 'react';
 import "./ProductList.css";
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -17,12 +17,11 @@ const products = [
 const getTotalPrice = (items = []) =>{
     return items.reduce((acc, item) => {
         return acc += item.price
-    })
+    },0)
 }
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
-
     const {tg} = useTelegram();
 
     const onAdd = (product) => {
@@ -49,7 +48,7 @@ const ProductList = () => {
 
     return (
         <div className='list'>
-            {ProductList.map(item => (
+            {products.map(item => (
                 <ProductItem
                     product={item}
                     onAdd={onAdd}
